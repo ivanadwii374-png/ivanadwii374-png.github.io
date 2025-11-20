@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+    crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Alarm Belajar Cerdas
+        Si ABC</title>
+    
+    <style>
+        body { font-family: sans-serif; max-width:600px; margin:0 auto; padding:2em; }
+        .card { background: #f9f9f9; border-radius:8px; padding:1em; margin-bottom:1em; }
+        label { display:block; margin-top:0.5em; }
+        input, textarea { width:100%; margin-bottom:0.5em; padding:0.5em;}
+        button { padding:0.5em 1.5em; }
+        .timer { font-size:2em; margin:1em 0; text-align:center;}
+        .list { margin-top:1em; }
+    </style>
+</head>
+<body class="backround" background="bg.jpg">
+    <div class="container-fluid">
+    
+    <h1 class="alarem">Si ABC</h1>
+        <h1 class="alarem">"Alarm Belajar Cerdas"</h1>
+    <div class="waktu">
+        
+        <div class="timer" id="timer">25:00</div>
+        <div class="satu">
+        <body>
+</body>
+        <button onclick="startPomodoro()">Mulai Belajar (25 menit)</button>
+        <button onclick="startBreak()">Mulai Istirahat (5 menit)</button>
+        </div>
+        
+    </div>
+    <div class="catatan">
+        <h3>Catatan PR & Deadline</h3>
+        <form id="prForm">
+            <label>Nama PR/Tugas:</label><input type="text" id="prName" required>
+            <label>Deadline (YYYY-MM-DD):</label><input type="date" id="prDeadline" required>
+            <div class="pr">
+                <button type="submit">Tambah PR</button>
+            </div>
+        </form>
+        <div class="list" id="prList"></div>
+    </div>
+    <div class="materi">
+        <h3>Catatan Materi</h3>
+        <form id="materiForm">
+            <label>Mata Pelajaran:</label><select id="materiName" required>
+                <option value="">-- Pilih Mata Pelajaran --</option>
+                <option>Bahasa Indonesia</option>
+                <option>Bahasa Jawa</option>
+                <option>Matematika</option>
+                <option>IPA</option>
+                <option>IPS</option>
+                <option>PKN</option>
+                <option>Agama</option>
+                <option>Bahasa Inggris</option>
+                <option>Penjas</option>
+                <option>Seni Budaya</option>
+            </select>
+
+            <label>Catatan Materi:</label><textarea id="materiCatatan" rows="2" required></textarea>
+            <from id="catatanfrom">
+            <div class="kotak">
+                <button type="submit">Tambah Catatan</button>
+                
+            </div>
+            </from>
+        </form>
+        <div class="list" id="materiList"></div>
+        <div class="keluar">
+            <button onclick="window.location.href='keluar.html'" class="btn btn-danger" style="margin-top:1em;">Keluar dari Aplikasi</button>
+        </div>
+        
+    </div>
+    </div>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script>
+        // Timer Section
+        let timer;
+        let secondsLeft = 1500; // 25 menit
+        function updateTimerDisplay(sec) {
+            let m = String(Math.floor(sec/60)).padStart(2,'0');
+            let s = String(sec%60).padStart(2,'0');
+            document.getElementById('timer').textContent = `${m}:${s}`;
+        }
+        function runTimer(duration, label) {
+            clearInterval(timer);
+            secondsLeft = duration;
+            updateTimerDisplay(secondsLeft);
+            timer = setInterval(()=> {
+                secondsLeft--;
+                updateTimerDisplay(secondsLeft);
+                if(secondsLeft<=0) {
+                    clearInterval(timer);
+                    alert(`Waktu ${label} telah selesai!`);
+                }
+            },1000);
+        }
+        function startPomodoro() { runTimer(25*60, "Belajar"); }
+        function startBreak() { runTimer(5*60, "Istirahat"); }
+
+        // PR Section
+        let prArr = [];
+        document.getElementById('prForm').onsubmit = function(e) {
+        e.preventDefault();
+        const name = document.getElementById('prName').value;
+        const deadline = document.getElementById('prDeadline').value;
+        prArr.push({name, deadline});
+        updatePRList();
+        this.reset();
+    };
+        function updatePRList() {
+        let html = "<ul>";
+        prArr.forEach((pr,i)=>{
+            html += `<li>
+                ${pr.name} - Deadline: ${pr.deadline}
+                <button onclick="selesaiPR(${i})">Selesai</button>
+            </li>`;
+        });
+        html += "</ul>";
+        document.getElementById('prList').innerHTML = html;
+    }
+        function selesaiPR(idx) {
+        prArr.splice(idx, 1);
+        updatePRList();
+    }
+
+        // Materi Section
+        let materiArr = [];
+        document.getElementById('materiForm').onsubmit = function(e){
+            e.preventDefault();
+            const materi = document.getElementById('materiName').value;
+            const catatan = document.getElementById('materiCatatan').value;
+            materiArr.push({materi, catatan, tanggal: (new Date()).toISOString().slice(0,10)});
+            updateMateriList();
+            this.reset();
+        };
+        function updateMateriList() {
+            let html = "<ul>";
+            materiArr.forEach(m=>{
+                html += `<li><strong>${m.materi}</strong> (${m.tanggal}): ${m.catatan}</li>`;
+            });
+            html += "</ul>";
+            document.getElementById('materiList').innerHTML = html;
+        }
+        <a href="keluar.html" class="btn btn-masuk">Keluar Dari Aplikasi</a>
+        
+    </script>
+
+</body>
+</html>

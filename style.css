@@ -1,0 +1,108 @@
+.alarem{
+    text-align: center;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 45px;
+    color: #003366;
+    font-weight: 700;
+}
+
+
+.backround{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.waktu{
+    background-color:cornflowerblue;
+    color: aliceblue;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 30px;
+}
+
+.catatan{
+    background-color:cornflowerblue;
+    color: aliceblue;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 30px;
+}
+
+.materi{
+    background-color:cornflowerblue;
+    color: aliceblue;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 30px;
+}
+
+.satu button:hover{
+    border-style: 5pt solid cadetblue;
+    color: white;
+    background-color:lightslategray;
+    font-size: 18px;
+}
+
+.satu{
+    text-align: center;
+}
+
+.pr  button:hover{
+    border-style: 5pt solid cadetblue;
+    color: white;
+    background-color:lightslategray;
+    font-size: 18px;
+}
+
+.kotak button:hover{
+    border-style: 5pt solid cadetblue;
+    color: white;
+    background-color:lightslategray;
+    font-size: 18px;
+}
+
+.list{
+    
+    padding: 0.20em 0.5em;
+    font-size: 15px;
+}
+
+
+.list button:hover{
+    border-style: 5pt solid cadetblue;
+    color: white;
+    background-color:lightslategray;
+    font-size: 17px;
+}
+
+.mapel{
+    
+    width: 100%;
+    padding: 5em;
+    font-size: 15px;
+
+}
+
+#materiList li {
+    white-space: normal;     
+    word-wrap: break-word;   
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.keluar{
+    text-align:right;
+}
